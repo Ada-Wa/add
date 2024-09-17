@@ -1,0 +1,202 @@
+#include<stdio.h>
+#include<string.h> 
+#include<stdlib.h> 
+#define max 999
+struct in               //收入
+{
+    char day[max];        //日期
+    int money;     //金额   
+ 	char type[max];   //类别
+ 	char others[max];     //备注
+}in[max];
+
+struct out           //支出
+{
+    char day[max];        //日期
+    int money;     //金额   
+ 	char type[max];   //类别
+ 	char others[max];     //备注
+}out[max];
+
+int income(int *p1)
+{
+
+	printf("\n=================================\n");
+	printf("欢迎使用个人账单管理系统\n");
+	printf("=================================\n");
+	printf("请输入收入信息:\n");
+	
+	printf("日期(YYYY-MM-DD):");
+	fflush(stdin);
+	gets(in[*p1].day);
+
+	do
+	{
+		printf("金额(请输入正数):");
+		scanf("%d",&in[*p1].money);
+	}while(in[*p1].money<0);
+
+	
+	printf("类别(如工资、奖金等):");
+	fflush(stdin);
+	gets(in[*p1].type);
+		
+	printf("备注:");
+	fflush(stdin);
+	gets(in[*p1].others);
+	
+	(*p1)++;	
+	
+	printf("收入已成功记录！\n");
+	
+	printf("按任意键返回主菜单...\n");
+	getchar();
+	
+	return 0;	
+}
+int outcome(int *p2)
+{
+	printf("\n=================================\n");
+	printf("欢迎使用个人账单管理系统\n");
+	printf("=================================\n");
+	printf("请输入收入信息:\n");
+	
+	printf("日期(YYYY-MM-DD):");
+	fflush(stdin);
+	gets(out[*p2].day);
+	
+	do
+	{
+		printf("金额:(请输入正数)");
+		scanf("%d",&out[*p2].money);
+	}while(out[*p2].money<0);
+	
+	
+	printf("类别(如餐饮、交通、购物等):");
+	fflush(stdin);
+	gets(out[*p2].type);
+		
+	printf("备注:");
+	fflush(stdin);
+	gets(out[*p2].others);	
+	
+	printf("支出已成功记录！\n");
+	
+	printf("按任意键返回主菜单...\n");
+	getchar();
+	
+	(*p2)++;	
+	
+	return 0;	
+}
+
+void read(int *p1,int *p2)     //p1收入，p2支出(读出)
+{
+	int i,j;
+	char ch;
+	FILE *fp1=fopen("D:\\income.txt","r");         //把文档income信息存入结构体                 
+	if(fp1 == NULL)     //文件不存在   
+	{
+		FILE *fp4=fopen("D:\\income.txt","w");
+		fclose(fp4); 
+	}
+	else  
+	{
+		for(i=0;i<max;i++)
+		{
+			fscanf(fp1,"%s",&in[i].day);		
+			fscanf(fp1,"%d",&in[i].money);			
+			fscanf(fp1,"%s",&in[i].type);
+			fscanf(fp1,"%s",&in[i].others);
+		}	
+		p1=&i;		
+		fclose(fp1);			
+	}	
+	
+	FILE *fp2=fopen("D:\\outcome.txt","r");         //存入outcome信息                   
+	if(fp2==NULL
+	)       
+	{
+		FILE *fp3=fopen("D:\\outcome.txt","w"); 
+		fclose(fp3);
+	}
+	else  
+	{	
+		for(j=0;j<max;j++)
+		{
+			fscanf(fp2,"%s",&out[j].day);
+			fscanf(fp2,"%d",&out[j].money);			
+			fscanf(fp2,"%s",&out[j].type);
+			fscanf(fp2,"%s",&out[j].others);
+		}
+		p2=&j;	
+		fclose(fp2);					
+	}	
+}
+
+void write(int *p1,int *p2)   //p1收入，p2支出(写入文档)
+{
+	FILE *fp1=fopen("D:\\income.txt","a");   
+	FILE *fp2=fopen("D:\\outcome.txt","a");  
+	      
+	for(int i=0;i<*p1;i++)              //写入income    
+	{
+		fprintf(fp1,"%s",in[i].day);//日期
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].money);//收入
+		fprintf(fp1,"\n");	
+			
+		fprintf(fp1,"%s",in[i].type);  //类别
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%s",in[i].others);  //备注
+		fprintf(fp1,"\n");
+	}	
+	fclose(fp1);
+    
+	for(int j=0;j<*p2;j++)           //写入outcome     
+	{
+		fprintf(fp2,"%s",out[j].day);//日期
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].money); //支出
+		fprintf(fp2,"\n");	
+			
+		fprintf(fp2,"%s",out[j].type);//类别
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%s",out[j].others);//备注
+		fprintf(fp2,"\n");
+	}
+	fclose(fp2);
+
+}
+int main()
+{
+	int choice,i=0,j=0,*p1,*p2;
+	p1=&i;
+	p2=&j;
+	read(p1,p2);
+	
+	do
+    {
+    	printf("=================================\n");
+    	printf("欢迎使用个人账单管理系统\n");
+    	printf("=================================\n");
+    	printf("1.记录收入\n");
+    	printf("2.记录支出\n");
+    	printf("0.退出系统\n");
+    	printf("请输入选项序号:");
+    	scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:income(p1);continue;
+			case 2:outcome(p2);continue;
+			case 0:printf("关闭程序");break;
+			default:printf("输入错误，请重新输入\n");continue;
+		} 
+    }while(choice!=0);
+	write(p1,p2);
+	return 0;
+}
