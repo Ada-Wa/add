@@ -1,1 +1,540 @@
-feature添加功能：查看所有账单、查询账单
+#include<stdio.h>
+#include<string.h> 
+#include<stdlib.h> 
+#define max 999
+#define constyear 2024
+struct in               //收入
+{
+	int year;  //年
+	int month;  //月
+	int day;    //日
+    int money;     //金额   
+ 	char type[max];   //类别
+ 	char others[max];     //备注
+}in[max];
+
+struct out           //支出
+{
+	long year;  //年
+	int month;  //月
+	int day;    //日
+    int money;     //金额   
+ 	char type[max];   //类别
+ 	char others[max];     //备注
+}out[max];
+
+
+
+
+
+int income(int *p1)  //---------------1记录输入账单
+{
+	long year;
+	int month,day;
+	printf("\n=================================\n");
+	printf("欢迎使用个人账单管理系统\n");
+	printf("=================================\n");
+	printf("请输入收入信息:\n");
+	
+	printf("日期(YYYY-MM-DD):");
+	fflush(stdin);
+	while(1)
+	{
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //年满足要求
+		{
+			if(month>0 && month<=12)  //月满足要求
+			{
+				if(day>0 && day<=31)//日满足要求
+				{
+					in[*p1].year=year;
+					in[*p1].month=month;
+					in[*p1].day=day;
+					break;
+				}
+			}
+		}
+		printf("格式不正确!请重新输入！！！\n");
+	}
+	
+	do
+	{
+		printf("金额(请输入正数):");
+		scanf("%d",&in[*p1].money);
+	}while(in[*p1].money<0);
+
+	
+	printf("类别(如工资、奖金等):");
+	fflush(stdin);
+	gets(in[*p1].type);
+		
+	printf("备注:");
+	fflush(stdin);
+	gets(in[*p1].others);
+	
+	(*p1)++;	
+	
+	printf("收入已成功记录！\n");
+	
+	printf("按任意键返回主菜单...\n");
+	getchar();
+	
+	return 0;	
+}
+int outcome(int *p2)   //------------2记录输出账单
+{
+	int year,month,day;
+	printf("\n=================================\n");
+	printf("欢迎使用个人账单管理系统\n");
+	printf("=================================\n");
+	printf("请输入收入信息:\n");
+	
+	printf("日期(YYYY-MM-DD):");
+	fflush(stdin);
+	while(1)
+	{
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //年满足要求
+		{
+			if(month>0 && month<=12)  //月满足要求
+			{
+				if(day>0 && day<=31)//日满足要求
+				{
+					out[*p2].year=year;
+					out[*p2].month=month;
+					out[*p2].day=day;
+					break;
+				}
+			}
+		}
+		printf("格式不正确! 请更新输入！！！\n");
+	}
+	
+	do
+	{
+		printf("金额:(请输入正数)");
+		scanf("%d",&out[*p2].money);
+	}while(out[*p2].money<0);
+	
+	
+	printf("类别(如餐饮、交通、购物等):");
+	fflush(stdin);
+	gets(out[*p2].type);
+		
+	printf("备注:");
+	fflush(stdin);
+	gets(out[*p2].others);	
+	
+	printf("支出已成功记录！\n");
+	
+	printf("按任意键返回主菜单...\n");
+	getchar();
+	
+	(*p2)++;	
+	
+	return 0;	
+}
+
+
+
+
+int outputIn(int temp[max],int *p1)  //输出收入
+{
+	int a=0;
+	printf("\n-----收入-----\n");
+	if(*p1==0)
+	{
+		printf("无收入\n");
+		return 0;
+	}
+	for(int i=0;i<*p1;i++)
+	{
+		a=temp[i];
+		printf("\n日期：%d-%d-%d\n",in[a].year,in[a].month,in[a].day);
+		printf("金额：%d\n",in[a].money);
+		printf("类别:%s\n",in[a].type);
+		printf("备注:%s\n",in[a].others);
+	}	
+	return 1;
+}
+int outputOut(int temp[max],int *p2)   //输出支出
+{
+	int a=0;
+	if(*p2==0)
+	{
+		printf("\n无支出\n");
+		return 0;
+	}
+	for(int i=0;i<*p2;i++)
+	{
+		a=temp[i];
+		printf("\n-----支出-----\n");
+		printf("日期：%d-%d-%d\n",out[a].year,out[a].month,out[a].day);
+		printf("金额：%d\n",out[a].money);
+		printf("类别:%s\n",out[a].type);
+		printf("备注:%s\n",out[a].others);
+	}
+	return 1;
+}
+
+
+
+
+
+//按照日期输出账单
+void dataCheck(int *p1,int *p2)   
+{
+	int year,month,day;
+	int count=0,count2=0,number[max],number2[max];     //记录多少个相同的日期
+	
+	
+	printf("请输入日期(YYYY-MM-DD)：\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //年满足要求
+		{
+			if(month>0 && month<=12)  //月满足要求
+			{
+				if(day>0 && day<=31)//日满足要求
+				{
+					break;
+				}
+			}
+		}
+		printf("格式不正确! 请重新输入！！！\n");
+	}
+	
+	
+	//找收入
+	for(int i=0;i<*p1;i++)   
+	{
+		
+		if(in[i].year==year && in[i].month ==month)
+		{
+			if(in[i].day==day)
+			{
+				number[count]=i;
+				count++;
+			}	
+		}	
+    }
+    outputIn(number,p1);
+    
+    //找支出
+	for(int i=0;i<*p1;i++)   
+	{
+		if(out[i].year==year && out[i].month==month && out[i].day==day)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    outputOut(number2,p2);
+}
+
+
+//按照日期范围输出账单
+void dataArrangeCheck(int *p1,int *p2)   
+{
+	int year,month,day,year2,month2,day2;
+	int count=0,count2=0,number[max],number2[max];     //记录多少个相同的日期
+	
+	
+	printf("请起始的输入日期(YYYY-MM-DD)：\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //年满足要求
+		{
+			if(month>0 && month<=12)  //月满足要求
+			{
+				if(day>0 && day<=31)//日满足要求
+				{
+					break;
+				}
+				
+			}
+		}
+		printf("格式不正确! 请重新输入！！！\n");
+	}
+
+	printf("请输入终止的日期(YYYY-MM-DD)：\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year2,&month2,&day2);
+		if(year2>0 && year2<=constyear)  //年满足要求
+		{
+			if(month2>0 && month2<=12)  //月满足要求
+			{
+				if(day2>0 && day2<=31)//日满足要求
+				{
+					break;
+				}
+			}
+		}
+		printf("格式不正确! 请重新输入！！！\n");
+	}	
+	
+	//找收入
+	for(int i=0;i<*p1;i++)   
+	{
+		
+		if(in[i].year==year && in[i].month ==month)
+		{
+			if(in[i].day==day)
+			{
+				number[count]=i;
+				count++;
+			}	
+		}	
+    }
+    outputIn(number,p1);
+    
+    //找支出
+	for(int i=0;i<*p1;i++)   
+	{
+		if(out[i].year==year && out[i].month==month && out[i].day==day)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    outputOut(number2,p2);
+
+}
+
+
+//按照类别输出账单
+void typeCheck(int *p1,int *p2)
+{
+	char temp[max];
+	int number[max],number2[max],count=0,count2=0;
+
+	printf("请输入账单的类别(如餐饮、交通、购物等):");
+	fflush(stdin);
+	gets(temp);
+
+	//找收入
+	for(int i=0;i<*p1;i++)   
+	{
+		if(in[i].type==temp)
+		{
+			number[count]=i;
+			count++;
+		}	
+    }
+    outputIn(number,p1);
+    
+    //找支出
+	for(int i=0;i<*p1;i++)   
+	{
+		if(out[i].type==temp)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    outputOut(number2,p2);
+}
+
+
+
+
+//----------4账单查询：用户可以按照指定日期、日期范围或类别查询账单，收入和支出分开显示
+void checkBills(int *p1,int *p2)  
+{
+	int day,choice,temp1;
+
+	do
+	{
+		printf("\n请输入要查询的账单的方式：\n");
+		printf("1.指定日期\n");
+		printf("2.日期范围\n");
+		printf("3.类别\n");
+		printf("0.返回主菜单（结束）\n");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:dataCheck(p1,p2);continue;
+			case 2:dataArrangeCheck(p1,p2);continue;
+			case 3:typeCheck(p1,p2);continue;
+			case 0:break;
+			default:printf("输入错误，请重新输入\n");continue;
+		}
+	}while(choice!=0);	
+}
+
+
+
+//------------3账单展示：系统能够展示所有录入的账单记录，收入和支出分开显示
+void checkAllBills(int *p1,int *p2)  
+{
+	int temp[max],temp2[max];
+	for(int i=0;i<*p1;i++)
+	{
+		temp[i]=i;
+	}
+	outputIn(temp,p1);
+	
+	for(int j=0;j<*p1;j++)
+	{
+		temp2[j]=j;
+	}
+	outputOut(temp2,p2);
+}
+
+
+
+
+
+//p1收入，p2支出(读入程序)
+void read(int *p1,int *p2)     
+{
+	int i,j;
+	char ch;
+	FILE *fp1=fopen("D:\\income.txt","r");         //把文档income信息存入结构体                 
+	if(fp1 == NULL)     //文件不存在   
+	{
+		FILE *fp4=fopen("D:\\income.txt","w");
+		fclose(fp4); 
+	}
+	else  
+	{
+		for(i=0;i<max;i++)
+		{
+			fscanf(fp1,"%d",&in[i].year);
+			if(in[i].year==0)
+			{
+				break;
+			}
+			fscanf(fp1,"%d",&in[i].month);
+			fscanf(fp1,"%d",&in[i].day);		
+			fscanf(fp1,"%d",&in[i].money);			
+			fscanf(fp1,"%s",&in[i].type);
+			fscanf(fp1,"%s",&in[i].others);
+		}	
+		*(p1)=i;	
+
+		fclose(fp1);			
+	}	
+	
+	FILE *fp2=fopen("D:\\outcome.txt","r");         //存入outcome信息                   
+	if(fp2==NULL
+	)       
+	{
+		FILE *fp3=fopen("D:\\outcome.txt","w"); 
+		fclose(fp3);
+	}
+	else  
+	{	
+		for(j=0;j<max;j++)
+		{
+			fscanf(fp2,"%d",&out[j].year);
+			if(out[j].year==0)
+			{
+				break;
+			}
+			fscanf(fp2,"%d",&out[j].month);
+			fscanf(fp2,"%d",&out[j].day);
+			fscanf(fp2,"%d",&out[j].money);			
+			fscanf(fp2,"%s",&out[j].type);
+			fscanf(fp2,"%s",&out[j].others);
+		}
+		*(p2)=j;	
+		fclose(fp2);					
+	}	
+}
+
+
+//p1收入，p2支出(写入文档)
+void write(int *p1,int *p2)  
+{
+	FILE *fp1=fopen("D:\\income.txt","a");   
+	FILE *fp2=fopen("D:\\outcome.txt","a");  
+	      
+	for(int i=0;i<*p1;i++)              //写入income    
+	{
+		fprintf(fp1,"%d",in[i].year);//年
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].month);//月
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].day);//日
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].money);//收入
+		fprintf(fp1,"\n");	
+			
+		fprintf(fp1,"%s",in[i].type);  //类别
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%s",in[i].others);  //备注
+		fprintf(fp1,"\n");
+	}	
+	fclose(fp1);
+    
+	for(int j=0;j<*p2;j++)           //写入outcome     
+	{
+		fprintf(fp2,"%d",out[j].year);//年
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].month);//月
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].day);//日
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].money); //支出
+		fprintf(fp2,"\n");	
+			
+		fprintf(fp2,"%s",out[j].type);//类别
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%s",out[j].others);//备注
+		fprintf(fp2,"\n");
+	}
+	fclose(fp2);
+}
+
+int main()
+{
+	int choice,i=0,j=0,*p1,*p2;
+	p1=&i;
+	p2=&j;
+	read(p1,p2);
+
+	do
+    {
+    	printf("\n=================================\n");
+    	printf("欢迎使用个人账单管理系统\n");
+    	printf("=================================\n");
+    	printf("1.记录收入\n");
+    	printf("2.记录支出\n");
+    	printf("3.查看所有账单\n");
+    	printf("4.查询账单\n");
+    	printf("0.退出系统\n");
+    	printf("请输入选项序号:");
+    	scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:income(p1);continue;       //记录收入的账单
+			case 2:outcome(p2);continue;      //记录支出的账单
+			
+			//账单展示：系统能够展示所有录入的账单记录，收入和支出分开显示
+			case 3:checkAllBills(p1,p2);continue;
+			
+			//账单查询：用户可以按照指定日期、日期范围或类别查询账单，收入和支出分开显示
+			case 4:checkBills(p1,p2);continue;
+			
+			case 0:printf("关闭程序");break;
+			default:printf("输入错误，请重新输入\n");continue;
+		} 
+    }while(choice!=0);
+	write(p1,p2);
+	return 0;
+}
