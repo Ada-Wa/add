@@ -2,87 +2,129 @@
 #include<string.h> 
 #include<stdlib.h> 
 #define max 999
-struct in               //æ”¶å…¥
+#define constyear 2024
+struct in               //ÊÕÈë
 {
-    char day[max];        //æ—¥æœŸ
-    int money;     //é‡‘é¢   
- 	char type[max];   //ç±»åˆ«
- 	char others[max];     //å¤‡æ³¨
+	int year;  //Äê
+	int month;  //ÔÂ
+	int day;    //ÈÕ
+    int money;     //½ð¶î   
+ 	char type[max];   //Àà±ð
+ 	char others[max];     //±¸×¢
 }in[max];
 
-struct out           //æ”¯å‡º
+struct out           //Ö§³ö
 {
-    char day[max];        //æ—¥æœŸ
-    int money;     //é‡‘é¢   
- 	char type[max];   //ç±»åˆ«
- 	char others[max];     //å¤‡æ³¨
+	long year;  //Äê
+	int month;  //ÔÂ
+	int day;    //ÈÕ
+    int money;     //½ð¶î   
+ 	char type[max];   //Àà±ð
+ 	char others[max];     //±¸×¢
 }out[max];
 
-int income(int *p1)
+
+int income(int *p1)  //---------------1¼ÇÂ¼ÊäÈëÕËµ¥
 {
-
+	long year;
+	int month,day;
 	printf("\n=================================\n");
-	printf("æ¬¢è¿Žä½¿ç”¨ä¸ªäººè´¦å•ç®¡ç†ç³»ç»Ÿ\n");
+	printf("»¶Ó­Ê¹ÓÃ¸öÈËÕËµ¥¹ÜÀíÏµÍ³\n");
 	printf("=================================\n");
-	printf("è¯·è¾“å…¥æ”¶å…¥ä¿¡æ¯:\n");
+	printf("ÇëÊäÈëÊÕÈëÐÅÏ¢:\n");
 	
-	printf("æ—¥æœŸ(YYYY-MM-DD):");
+	printf("ÈÕÆÚ(YYYY-MM-DD):");
 	fflush(stdin);
-	gets(in[*p1].day);
-
+	while(1)
+	{
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //ÄêÂú×ãÒªÇó
+		{
+			if(month>0 && month<=12)  //ÔÂÂú×ãÒªÇó
+			{
+				if(day>0 && day<=31)//ÈÕÂú×ãÒªÇó
+				{
+					in[*p1].year=year;
+					in[*p1].month=month;
+					in[*p1].day=day;
+					break;
+				}
+			}
+		}
+		printf("¸ñÊ½²»ÕýÈ·!ÇëÖØÐÂÊäÈë£¡£¡£¡\n");
+	}
+	
 	do
 	{
-		printf("é‡‘é¢(è¯·è¾“å…¥æ­£æ•°):");
+		printf("½ð¶î(ÇëÊäÈëÕýÊý):");
 		scanf("%d",&in[*p1].money);
 	}while(in[*p1].money<0);
 
 	
-	printf("ç±»åˆ«(å¦‚å·¥èµ„ã€å¥–é‡‘ç­‰):");
+	printf("Àà±ð(Èç¹¤×Ê¡¢½±½ðµÈ):");
 	fflush(stdin);
 	gets(in[*p1].type);
 		
-	printf("å¤‡æ³¨:");
+	printf("±¸×¢:");
 	fflush(stdin);
 	gets(in[*p1].others);
 	
 	(*p1)++;	
 	
-	printf("æ”¶å…¥å·²æˆåŠŸè®°å½•ï¼\n");
+	printf("ÊÕÈëÒÑ³É¹¦¼ÇÂ¼£¡\n");
 	
-	printf("æŒ‰ä»»æ„é”®è¿”å›žä¸»èœå•...\n");
+	printf("°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥...\n");
 	getchar();
 	
 	return 0;	
 }
-int outcome(int *p2)
+int outcome(int *p2)   //------------2¼ÇÂ¼Êä³öÕËµ¥
 {
+	int year,month,day;
 	printf("\n=================================\n");
-	printf("æ¬¢è¿Žä½¿ç”¨ä¸ªäººè´¦å•ç®¡ç†ç³»ç»Ÿ\n");
+	printf("»¶Ó­Ê¹ÓÃ¸öÈËÕËµ¥¹ÜÀíÏµÍ³\n");
 	printf("=================================\n");
-	printf("è¯·è¾“å…¥æ”¶å…¥ä¿¡æ¯:\n");
+	printf("ÇëÊäÈëÊÕÈëÐÅÏ¢:\n");
 	
-	printf("æ—¥æœŸ(YYYY-MM-DD):");
+	printf("ÈÕÆÚ(YYYY-MM-DD):");
 	fflush(stdin);
-	gets(out[*p2].day);
+	while(1)
+	{
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //ÄêÂú×ãÒªÇó
+		{
+			if(month>0 && month<=12)  //ÔÂÂú×ãÒªÇó
+			{
+				if(day>0 && day<=31)//ÈÕÂú×ãÒªÇó
+				{
+					out[*p2].year=year;
+					out[*p2].month=month;
+					out[*p2].day=day;
+					break;
+				}
+			}
+		}
+		printf("¸ñÊ½²»ÕýÈ·! Çë¸üÐÂÊäÈë£¡£¡£¡\n");
+	}
 	
 	do
 	{
-		printf("é‡‘é¢:(è¯·è¾“å…¥æ­£æ•°)");
+		printf("½ð¶î:(ÇëÊäÈëÕýÊý)");
 		scanf("%d",&out[*p2].money);
 	}while(out[*p2].money<0);
 	
 	
-	printf("ç±»åˆ«(å¦‚é¤é¥®ã€äº¤é€šã€è´­ç‰©ç­‰):");
+	printf("Àà±ð(Èç²ÍÒû¡¢½»Í¨¡¢¹ºÎïµÈ):");
 	fflush(stdin);
 	gets(out[*p2].type);
 		
-	printf("å¤‡æ³¨:");
+	printf("±¸×¢:");
 	fflush(stdin);
 	gets(out[*p2].others);	
 	
-	printf("æ”¯å‡ºå·²æˆåŠŸè®°å½•ï¼\n");
+	printf("Ö§³öÒÑ³É¹¦¼ÇÂ¼£¡\n");
 	
-	printf("æŒ‰ä»»æ„é”®è¿”å›žä¸»èœå•...\n");
+	printf("°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥...\n");
 	getchar();
 	
 	(*p2)++;	
@@ -90,12 +132,324 @@ int outcome(int *p2)
 	return 0;	
 }
 
-void read(int *p1,int *p2)     //p1æ”¶å…¥ï¼Œp2æ”¯å‡º(è¯»å‡º)
+
+int outputIn(int temp[ ],int *p1)  //Êä³öÊÕÈë
+{
+	int a=0,length;
+	length=sizeof(temp)/4;
+	printf("\n-----ÊÕÈë-----\n");
+	if(*p1==0||length==-1)
+	{
+		printf("ÎÞÊÕÈë\n");
+		return 0;
+	}
+	for(int i=0;i<length-1;i++)
+	{
+		a=temp[i];
+		printf("\nÈÕÆÚ£º%d-%d-%d\n",in[a].year,in[a].month,in[a].day);
+		printf("½ð¶î£º%d\n",in[a].money);
+		printf("Àà±ð:%s\n",in[a].type);
+		printf("±¸×¢:%s\n",in[a].others);
+	}	
+	return 1;
+}
+int outputOut(int temp[ ],int *p2)   //Êä³öÖ§³ö
+{
+	int a=0,length;
+	length=sizeof(temp)/4;
+	if(*p2==0||length==-1)
+	{
+		printf("\nÎÞÖ§³ö\n");
+		return 0;
+	}
+	for(int i=0;i<length-1;i++)
+	{
+		a=temp[i];
+		printf("\n-----Ö§³ö-----\n");
+		printf("ÈÕÆÚ£º%d-%d-%d\n",out[a].year,out[a].month,out[a].day);
+		printf("½ð¶î£º%d\n",out[a].money);
+		printf("Àà±ð:%s\n",out[a].type);
+		printf("±¸×¢:%s\n",out[a].others);
+	}
+	return 1;
+}
+
+
+
+//4--°´ÕÕÈÕÆÚÊä³öÕËµ¥
+void dataCheck(int *p1,int *p2)   
+{
+	int year,month,day,count=0,count2=0;
+	int number[max],number2[max];     //¼ÇÂ¼¶àÉÙ¸öÏàÍ¬µÄÈÕÆÚ
+	
+	
+	printf("ÇëÊäÈëÈÕÆÚ(YYYY-MM-DD)£º\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //ÄêÂú×ãÒªÇó
+		{
+			if(month>0 && month<=12)  //ÔÂÂú×ãÒªÇó
+			{
+				if(day>0 && day<=31)//ÈÕÂú×ãÒªÇó
+				{
+					break;
+				}
+			}
+		}
+		printf("¸ñÊ½²»ÕýÈ·! ÇëÖØÐÂÊäÈë£¡£¡£¡\n");
+	}
+	
+	//ÕÒÊÕÈë
+	for(int i=0;i<*p1;i++)   
+	{
+		if(in[i].year==year && in[i].month==month && in[i].day==day)
+		{
+			number[count]=i;
+			count++;	
+		}	
+    }
+    count--;
+    outputIn(number,p1);
+    
+    //ÕÒÖ§³ö
+	for(int i=0;i<*p2;i++)   
+	{
+		if(out[i].year==year && out[i].month==month && out[i].day==day)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    count2--;
+    outputOut(number2,p2);
+}
+
+
+//4--°´ÕÕÈÕÆÚ·¶Î§Êä³öÕËµ¥
+void dataArrangeCheck(int *p1,int *p2)   
+{
+	int year,month,day,year2,month2,day2;
+	int count=0,count2=0,number[max],number2[max];     //¼ÇÂ¼¶àÉÙ¸öÏàÍ¬µÄÈÕÆÚ
+	
+	
+	printf("ÇëÆðÊ¼µÄÊäÈëÈÕÆÚ(YYYY-MM-DD)£º\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year,&month,&day);
+		if(year>0 && year<=constyear)  //ÄêÂú×ãÒªÇó
+		{
+			if(month>0 && month<=12)  //ÔÂÂú×ãÒªÇó
+			{
+				if(day>0 && day<=31)//ÈÕÂú×ãÒªÇó
+				{
+					break;
+				}
+				
+			}
+		}
+		printf("¸ñÊ½²»ÕýÈ·! ÇëÖØÐÂÊäÈë£¡£¡£¡\n");
+	}
+
+	printf("ÇëÊäÈëÖÕÖ¹µÄÈÕÆÚ(YYYY-MM-DD)£º\n");
+	while(1)
+	{
+		fflush(stdin);
+		scanf("%4d-%2d-%2d",&year2,&month2,&day2);
+		if(year2>0 && year2<=constyear)  //ÄêÂú×ãÒªÇó
+		{
+			if(month2>0 && month2<=12)  //ÔÂÂú×ãÒªÇó
+			{
+				if(day2>0 && day2<=31)//ÈÕÂú×ãÒªÇó
+				{
+					break;
+				}
+			}
+		}
+		printf("¸ñÊ½²»ÕýÈ·! ÇëÖØÐÂÊäÈë£¡£¡£¡\n");
+	}	
+	
+	//ÕÒÊÕÈë
+	for(int i=0;i<*p1;i++)   
+	{
+		if(in[i].year==year && in[i].month ==month && in[i].day==day)
+		{
+			number[count]=i;
+			count++;	
+		}	
+    }
+    count--;
+    outputIn(number,p1);
+    
+    //ÕÒÖ§³ö
+	for(int i=0;i<*p1;i++)   
+	{
+		if(out[i].year==year && out[i].month==month && out[i].day==day)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    count2--;
+    outputOut(number2,p2);
+}
+
+
+//4--°´ÕÕÀà±ðÊä³öÕËµ¥
+void typeCheck(int *p1,int *p2)
+{
+	char temp[max];
+	int number[max],number2[max],count=0,count2=0;
+
+	printf("ÇëÊäÈëÕËµ¥µÄÀà±ð(Èç²ÍÒû¡¢½»Í¨¡¢¹ºÎïµÈ):");
+	fflush(stdin);
+	gets(temp);
+
+	//ÕÒÊÕÈë
+	for(int i=0;i<*p1;i++)   
+	{
+		if(in[i].type==temp)
+		{
+			number[count]=i;
+			count++;
+		}	
+    }
+    count--;
+    outputIn(number,p1);
+    
+    //ÕÒÖ§³ö
+	for(int i=0;i<*p1;i++)   
+	{
+		if(out[i].type==temp)
+		{
+			number2[count2]=i;
+			count2++;
+		}	
+    }
+    count2--;
+    outputOut(number2,p2);
+}
+
+
+
+
+//----------4ÕËµ¥²éÑ¯£ºÓÃ»§¿ÉÒÔ°´ÕÕÖ¸¶¨ÈÕÆÚ¡¢ÈÕÆÚ·¶Î§»òÀà±ð²éÑ¯ÕËµ¥£¬ÊÕÈëºÍÖ§³ö·Ö¿ªÏÔÊ¾
+void checkBills(int *p1,int *p2)  
+{
+	int day,choice,temp1;
+	do
+	{
+		printf("\nÇëÊäÈëÒª²éÑ¯µÄÕËµ¥µÄ·½Ê½£º\n");
+		printf("1.Ö¸¶¨ÈÕÆÚ\n");
+		printf("2.ÈÕÆÚ·¶Î§\n");
+		printf("3.Àà±ð\n");
+		printf("0.·µ»ØÖ÷²Ëµ¥£¨½áÊø£©\n");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:dataCheck(p1,p2);continue;
+			case 2:dataArrangeCheck(p1,p2);continue;
+			case 3:typeCheck(p1,p2);continue;
+			case 0:break;
+			default:printf("ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë\n");continue;
+		}
+	}while(choice!=0);	
+}
+
+
+
+//------------3ÕËµ¥Õ¹Ê¾£ºÏµÍ³ÄÜ¹»Õ¹Ê¾ËùÓÐÂ¼ÈëµÄÕËµ¥¼ÇÂ¼£¬ÊÕÈëºÍÖ§³ö·Ö¿ªÏÔÊ¾
+void checkAllBills(int *p1,int *p2)  
+{
+	int temp[max],temp2[max];
+	for(int i=0;i<*p1;i++)
+	{
+		temp[i]=i;
+	}
+	outputIn(temp,p1);
+	
+	for(int j=0;j<*p1;j++)
+	{
+		temp2[j]=j;
+	}
+	outputOut(temp2,p2);
+}
+
+//------5Ô¤Ëã¹ÜÀí£ºÓÃ»§¿ÉÒÔÉèÖÃÃ¿¸öÔÂÖ§³öµÄÔ¤ËãÏÞ¶î£¬ÏµÍ³ÏÔÊ¾µ±Ç°Ê£Óà¿ÉÓÃÔ¤Ëã
+void arrange(int *p1,int *p2)
+{
+	int temp,arrange,last,a=0;
+	int count[max];
+	printf("ÇëÊäÈëÕâ¸öÔÂµÄÖ§³öÔ¤Ëã£º");
+	scanf("%d",&arrange);
+	temp=out[*(p2)-1].month;
+	for(int i=0;i<*p2;i++)
+	{
+		if(out[i].month==temp)
+		{
+			arrange-=out[i].money;
+		}
+	}
+	printf("±¾ÔÂÊ£ÓàÖ§³ö£º%d\n",arrange);
+}
+
+
+//-----6ÔÂ¶ÈÍ³¼Æ£ºÏµÍ³¿ÉÒÔÍ³¼ÆÃ¿ÔÂµÄ×ÜÊÕÈë¡¢×ÜÖ§³öºÍ¸÷Àà±ðµÄ½ð¶î
+void all(int *p1,int *p2)
+{
+	int year,month,income=0,outcome=0,income2=0,outcome2=0;
+	char type[max];
+	
+	printf("\nÇëÊäÈë²éÑ¯µÄÄê·Ý£º");
+	scanf("%d",&year);
+	printf("ÇëÊäÈë²éÑ¯µÄÔÂ·Ý£º");
+	scanf("%d",&month);
+	printf("ÇëÊäÈë²éÑ¯µÄÀà±ð£º");
+	fflush(stdin);
+	scanf("%s",&type);
+
+
+	for(int i=0;i<*p1;i++)   //²éÕÒ×ÜÊÕÈëÓë×ÜÖ§³ö 
+	{
+		if(in[i].year==year && in[i].month==month)
+		{
+			income+=in[i].money;
+			if(strcmp(in[i].type,type)==0)
+			{
+				income2+=in[i].money;
+			}	
+		}
+	}
+	
+	for(int i=0;i<*p2;i++)
+	{
+		if(out[i].month==month && out[i].year==year)
+		{
+			outcome+=out[i].money;
+			if(strcmp(out[i].type,type)==0)
+			{
+				outcome2+=out[i].money;
+			}
+		}	
+	}
+	printf("\nÕâ¸öÔÂµÄÊÕÈë¡¢Ö§³öÎª£º\n",income);
+	printf("×ÜÊÕÈë£º%d\n",income);
+	printf("×ÜÖ§³ö£º%d\n",outcome);	
+	printf("\nÕâ¸öÔÂµÄÀà±ðÎª%sµÄÊÕÈë¡¢Ö§³ö£º\n",type);
+	printf("×ÜÊÕÈë£º%d\n",income2);
+	printf("×ÜÖ§³ö£º%d\n",outcome2);	
+	
+}
+
+//p1ÊÕÈë£¬p2Ö§³ö(¶ÁÈë³ÌÐò)
+void read(int *p1,int *p2)     
 {
 	int i,j;
 	char ch;
-	FILE *fp1=fopen("D:\\income.txt","r");         //æŠŠæ–‡æ¡£incomeä¿¡æ¯å­˜å…¥ç»“æž„ä½“                 
-	if(fp1 == NULL)     //æ–‡ä»¶ä¸å­˜åœ¨   
+	FILE *fp1=fopen("D:\\income.txt","r");         //°ÑÎÄµµincomeÐÅÏ¢´æÈë½á¹¹Ìå                 
+	if(fp1 == NULL)     //ÎÄ¼þ²»´æÔÚ   
 	{
 		FILE *fp4=fopen("D:\\income.txt","w");
 		fclose(fp4); 
@@ -104,16 +458,23 @@ void read(int *p1,int *p2)     //p1æ”¶å…¥ï¼Œp2æ”¯å‡º(è¯»å‡º)
 	{
 		for(i=0;i<max;i++)
 		{
-			fscanf(fp1,"%s",&in[i].day);		
+			fscanf(fp1,"%d",&in[i].year);
+			if(in[i].year==0)
+			{
+				break;
+			}
+			fscanf(fp1,"%d",&in[i].month);
+			fscanf(fp1,"%d",&in[i].day);		
 			fscanf(fp1,"%d",&in[i].money);			
 			fscanf(fp1,"%s",&in[i].type);
 			fscanf(fp1,"%s",&in[i].others);
 		}	
-		p1=&i;		
+		*(p1)=i;	
+
 		fclose(fp1);			
 	}	
 	
-	FILE *fp2=fopen("D:\\outcome.txt","r");         //å­˜å…¥outcomeä¿¡æ¯                   
+	FILE *fp2=fopen("D:\\outcome.txt","r");         //´æÈëoutcomeÐÅÏ¢                   
 	if(fp2==NULL
 	)       
 	{
@@ -124,77 +485,117 @@ void read(int *p1,int *p2)     //p1æ”¶å…¥ï¼Œp2æ”¯å‡º(è¯»å‡º)
 	{	
 		for(j=0;j<max;j++)
 		{
-			fscanf(fp2,"%s",&out[j].day);
+			fscanf(fp2,"%d",&out[j].year);
+			if(out[j].year==0)
+			{
+				break;
+			}
+			fscanf(fp2,"%d",&out[j].month);
+			fscanf(fp2,"%d",&out[j].day);
 			fscanf(fp2,"%d",&out[j].money);			
 			fscanf(fp2,"%s",&out[j].type);
 			fscanf(fp2,"%s",&out[j].others);
 		}
-		p2=&j;	
+		*(p2)=j;	
 		fclose(fp2);					
 	}	
 }
 
-void write(int *p1,int *p2)   //p1æ”¶å…¥ï¼Œp2æ”¯å‡º(å†™å…¥æ–‡æ¡£)
+
+//p1ÊÕÈë£¬p2Ö§³ö(Ð´ÈëÎÄµµ)
+void write(int *p1,int *p2)  
 {
 	FILE *fp1=fopen("D:\\income.txt","a");   
 	FILE *fp2=fopen("D:\\outcome.txt","a");  
 	      
-	for(int i=0;i<*p1;i++)              //å†™å…¥income    
+	for(int i=0;i<*p1;i++)              //Ð´Èëincome    
 	{
-		fprintf(fp1,"%s",in[i].day);//æ—¥æœŸ
+		fprintf(fp1,"%d",in[i].year);//Äê
 		fprintf(fp1,"\n");
 		
-		fprintf(fp1,"%d",in[i].money);//æ”¶å…¥
+		fprintf(fp1,"%d",in[i].month);//ÔÂ
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].day);//ÈÕ
+		fprintf(fp1,"\n");
+		
+		fprintf(fp1,"%d",in[i].money);//ÊÕÈë
 		fprintf(fp1,"\n");	
 			
-		fprintf(fp1,"%s",in[i].type);  //ç±»åˆ«
+		fprintf(fp1,"%s",in[i].type);  //Àà±ð
 		fprintf(fp1,"\n");
 		
-		fprintf(fp1,"%s",in[i].others);  //å¤‡æ³¨
+		fprintf(fp1,"%s",in[i].others);  //±¸×¢
 		fprintf(fp1,"\n");
 	}	
 	fclose(fp1);
     
-	for(int j=0;j<*p2;j++)           //å†™å…¥outcome     
+	for(int j=0;j<*p2;j++)           //Ð´Èëoutcome     
 	{
-		fprintf(fp2,"%s",out[j].day);//æ—¥æœŸ
+		fprintf(fp2,"%d",out[j].year);//Äê
 		fprintf(fp2,"\n");
 		
-		fprintf(fp2,"%d",out[j].money); //æ”¯å‡º
+		fprintf(fp2,"%d",out[j].month);//ÔÂ
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].day);//ÈÕ
+		fprintf(fp2,"\n");
+		
+		fprintf(fp2,"%d",out[j].money); //Ö§³ö
 		fprintf(fp2,"\n");	
 			
-		fprintf(fp2,"%s",out[j].type);//ç±»åˆ«
+		fprintf(fp2,"%s",out[j].type);//Àà±ð
 		fprintf(fp2,"\n");
 		
-		fprintf(fp2,"%s",out[j].others);//å¤‡æ³¨
+		fprintf(fp2,"%s",out[j].others);//±¸×¢
 		fprintf(fp2,"\n");
 	}
 	fclose(fp2);
-
 }
+
 int main()
 {
 	int choice,i=0,j=0,*p1,*p2;
 	p1=&i;
 	p2=&j;
 	read(p1,p2);
-	
+
 	do
     {
+    	printf("\n=================================\n");
+    	printf("»¶Ó­Ê¹ÓÃ¸öÈËÕËµ¥¹ÜÀíÏµÍ³\n");
     	printf("=================================\n");
-    	printf("æ¬¢è¿Žä½¿ç”¨ä¸ªäººè´¦å•ç®¡ç†ç³»ç»Ÿ\n");
-    	printf("=================================\n");
-    	printf("1.è®°å½•æ”¶å…¥\n");
-    	printf("2.è®°å½•æ”¯å‡º\n");
-    	printf("0.é€€å‡ºç³»ç»Ÿ\n");
-    	printf("è¯·è¾“å…¥é€‰é¡¹åºå·:");
+    	printf("1.¼ÇÂ¼ÊÕÈë\n");
+    	printf("2.¼ÇÂ¼Ö§³ö\n");
+    	printf("3.²é¿´ËùÓÐÕËµ¥\n");
+    	printf("4.²éÑ¯ÕËµ¥\n");
+		printf("5.ÉèÖÃÔÂ¶ÈÔ¤Ëã\n");
+		printf("6.²é¿´ÔÂ¶ÈÍ³¼Æ±¨¸æ\n");
+    	printf("0.ÍË³öÏµÍ³\n");
+    	printf("ÇëÊäÈëÑ¡ÏîÐòºÅ:");
     	scanf("%d",&choice);
 		switch(choice)
 		{
-			case 1:income(p1);continue;
-			case 2:outcome(p2);continue;
-			case 0:printf("å…³é—­ç¨‹åº");break;
-			default:printf("è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");continue;
+			//--1¼ÇÂ¼ÊÕÈëµÄÕËµ¥
+			case 1:income(p1);continue;       
+
+			//--2¼ÇÂ¼Ö§³öµÄÕËµ¥
+			case 2:outcome(p2);continue;      
+			
+			//--3ÕËµ¥Õ¹Ê¾£ºÏµÍ³ÄÜ¹»Õ¹Ê¾ËùÓÐÂ¼ÈëµÄÕËµ¥¼ÇÂ¼£¬ÊÕÈëºÍÖ§³ö·Ö¿ªÏÔÊ¾
+			case 3:checkAllBills(p1,p2);continue;
+			
+			//--4ÕËµ¥²éÑ¯£ºÓÃ»§¿ÉÒÔ°´ÕÕÖ¸¶¨ÈÕÆÚ¡¢ÈÕÆÚ·¶Î§»òÀà±ð²éÑ¯ÕËµ¥£¬ÊÕÈëºÍÖ§³ö·Ö¿ªÏÔÊ¾
+			case 4:checkBills(p1,p2);continue;
+
+			//--5Ô¤Ëã¹ÜÀí£ºÓÃ»§¿ÉÒÔÉèÖÃÃ¿¸öÔÂÖ§³öµÄÔ¤ËãÏÞ¶î£¬ÏµÍ³ÏÔÊ¾µ±Ç°Ê£Óà¿ÉÓÃÔ¤Ëã
+			case 5:arrange(p1,p2);continue;
+
+			//--6ÔÂ¶ÈÍ³¼Æ£ºÏµÍ³¿ÉÒÔÍ³¼ÆÃ¿ÔÂµÄ×ÜÊÕÈë¡¢×ÜÖ§³öºÍ¸÷Àà±ðµÄ½ð¶î
+			case 6:all(p1,p2);continue;
+			
+			case 0:printf("¹Ø±Õ³ÌÐò");break;
+			default:printf("ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë\n");continue;
 		} 
     }while(choice!=0);
 	write(p1,p2);
